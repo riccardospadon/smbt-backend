@@ -28,13 +28,13 @@ tweetsRouter.get('/', (req, res) => {
 
 // POST per pubblicare un nuovo tweet
 tweetsRouter.post('/', (req, res) => {
-    const { text, username } = req.body   // testo e username richiesti
+    const { username, text } = req.body   // username e testo richiesti
     console.log("Dati ricevuti dal frontend:", { username, text })
-    if(!text || !username) {
-        return res.status(400).json({ error: 'Testo e username necessari!' })
+    if(!username || !text) {
+        return res.status(400).json({ error: 'Username e testo necessari!' })
     }
 
-    const newTweet = new Tweet(text, username)
+    const newTweet = new Tweet(username, text)
     tweets.push(newTweet)
     res.status(201).json(newTweet) // HTTP 201 per indicare che è stato creato
 })
