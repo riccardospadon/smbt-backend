@@ -7,6 +7,9 @@ const server = express()
 // porta del server
 const port = 3050
 
+// Middleware per analizzare i corpi delle richieste JSON
+server.use(express.json())
+
 // Sotto-directory /api
 server.use('/api', apiRouter)
 

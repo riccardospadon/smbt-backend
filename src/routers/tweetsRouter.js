@@ -34,16 +34,19 @@ tweetsRouter.post('/', (req, res) => {
 
     const newTweet = new Tweet(text)
     tweets.push(newTweet)
-    res.status(200).json(newTweet)
+    res.status(201).json(newTweet) // HTTP 201 per indicare che è stato creato
 })
 
 // POST per incrementare il contatore dei "mi piace"
 tweetsRouter.post('/:id/like', (req, res) => {
-    const tweetId = parseint(req.params.id)
+    const tweetId = Number(req.params.id)
+    if(isNaN(tweetId)) {
+        return res.status(400).json({ error: 'ID non valido' }) // HTTP 400: Server non può elaborare la richiesta
+    }
     const tweet = tweets.find(t => t.id === tweetId)
 
     if(!tweet){
-        return res.status(404).json({ error: 'Tweet non trovato! '})
+        return res.status(404).json({ error: 'Tweet non trovato! '}) // HTTP 404: errore per indicare che il tweet non esiste
     }
 
     tweet.likes++
