@@ -6,8 +6,8 @@ const tweetsRouter = express.Router();
 class Tweet {
     constructor(username, text) {
         this.id = Tweet.incrementId()
-        this.text = text
         this.username = username
+        this.text = text
         this.likes = 0
     }
 
@@ -29,6 +29,7 @@ tweetsRouter.get('/', (req, res) => {
 // POST per pubblicare un nuovo tweet
 tweetsRouter.post('/', (req, res) => {
     const { text, username } = req.body   // testo e username richiesti
+    console.log("Dati ricevuti dal frontend:", { username, text })
     if(!text || !username) {
         return res.status(400).json({ error: 'Testo e username necessari!' })
     }
