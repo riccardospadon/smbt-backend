@@ -4,7 +4,7 @@ const tweetsRouter = express.Router();
 
 // Classe Tweet per definire la struttura dei tweet
 class Tweet {
-    constructor(text) {
+    constructor(username, text) {
         this.id = Tweet.incrementId()
         this.text = text
         this.username = username
