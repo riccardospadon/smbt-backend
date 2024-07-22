@@ -7,6 +7,7 @@ class Tweet {
     constructor(text) {
         this.id = Tweet.incrementId()
         this.text = text
+        this.username = username
         this.likes = 0
     }
 
@@ -27,12 +28,16 @@ tweetsRouter.get('/', (req, res) => {
 
 // POST per pubblicare un nuovo tweet
 tweetsRouter.post('/', (req, res) => {
-    const { text } = req.body   // testo richiesto 
+    const { text, username } = req.body   // testo e username richiesti
     if(!text) {
         return res.status(400).json({ error: 'Testo necessario!' })
     }
 
-    const newTweet = new Tweet(text)
+    if(!username) {
+        return res.status(400).json({ error: 'Username necessario!' })
+    }
+
+    const newTweet = new Tweet(text, username)
     tweets.push(newTweet)
     res.status(201).json(newTweet) // HTTP 201 per indicare che è stato creato
 })
