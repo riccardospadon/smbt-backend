@@ -29,12 +29,8 @@ tweetsRouter.get('/', (req, res) => {
 // POST per pubblicare un nuovo tweet
 tweetsRouter.post('/', (req, res) => {
     const { text, username } = req.body   // testo e username richiesti
-    if(!text) {
-        return res.status(400).json({ error: 'Testo necessario!' })
-    }
-
-    if(!username) {
-        return res.status(400).json({ error: 'Username necessario!' })
+    if(!text || !username) {
+        return res.status(400).json({ error: 'Testo e username necessari!' })
     }
 
     const newTweet = new Tweet(text, username)
@@ -44,10 +40,7 @@ tweetsRouter.post('/', (req, res) => {
 
 // POST per incrementare il contatore dei "mi piace"
 tweetsRouter.post('/:id/like', (req, res) => {
-    const tweetId = Number(req.params.id)
-    if(isNaN(tweetId)) {
-        return res.status(400).json({ error: 'ID non valido' }) // HTTP 400: Server non può elaborare la richiesta
-    }
+    const tweetId = parseInt(req.params.id)
     const tweet = tweets.find(t => t.id === tweetId)
 
     if(!tweet){
