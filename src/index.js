@@ -1,5 +1,6 @@
 import express from 'express';
 import { genericError } from './middlewares/genericError.js';
+import apiRouter from './routers/apiRouter.js';
 
 const server = express()
 
@@ -7,7 +8,7 @@ const server = express()
 const port = 3050
 
 // Sotto-directory /api
-// server.use('/api', apiRouter)
+server.use('/api', apiRouter)
 
 // Errore generico (gestito nella cartella "middlewares")
 server.use(genericError)
